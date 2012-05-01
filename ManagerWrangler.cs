@@ -293,12 +293,7 @@ public class ManagerWrangler : MonoBehaviour {
 			return;
 		}
 		
-		if (argument != null) {
-			// FIXME implement
-			Debug.LogError ("Coroutines with argument objects are not yet supported.");
-		}
-		
-		IEnumerator routine = (IEnumerator)InvokeMember (sender, methodName, null);
+		IEnumerator routine = (IEnumerator)InvokeMember (sender, methodName, argument == null ? null : new object[] { argument });
 		StartPseudoCoroutine (sender, routine);
 	}
 	
