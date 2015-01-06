@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using ManagerWrangler;
 
-public sealed class SoundManager : ManagerSingleton<SoundManager> {
-	
+public sealed class SoundManager : ManagerSingleton<SoundManager>
+{
 	private bool _audible = true;
 	/// <summary>
 	/// Enable/disable sound effects.
@@ -20,7 +21,6 @@ public sealed class SoundManager : ManagerSingleton<SoundManager> {
 		}
 	}
 	
-	
 	/// <summary>
 	/// Play a sound effect.
 	/// </summary>
@@ -31,7 +31,6 @@ public sealed class SoundManager : ManagerSingleton<SoundManager> {
 	{
 		Play (resource, 1);
 	}
-	
 	
 	/// <summary>
 	/// Play a sound effect at a given volume.
@@ -44,7 +43,6 @@ public sealed class SoundManager : ManagerSingleton<SoundManager> {
 		Play((AudioClip)Resources.Load ("Sounds/" + resource), volume);
 	}
 	
-	
 	/// <summary>
 	/// Play a sound effect AudioClip.
 	/// </summary>
@@ -52,7 +50,6 @@ public sealed class SoundManager : ManagerSingleton<SoundManager> {
 	{
 		Play (clip, 1);
 	}
-	
 	
 	/// <summary>
 	/// Play a sound effect AudioClip at a given volume.
@@ -63,6 +60,4 @@ public sealed class SoundManager : ManagerSingleton<SoundManager> {
 			return;
 		AudioSource.PlayClipAtPoint (clip, Vector3.zero, volume);
 	}
-	
-
 }

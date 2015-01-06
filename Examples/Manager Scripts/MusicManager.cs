@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using ManagerWrangler;
 
-
-public sealed class MusicManager : ManagerSingleton<MusicManager> {
-	
+public sealed class MusicManager : ManagerSingleton<MusicManager>
+{
 	#region Fields & Properties
 	
 	/// <summary>
@@ -34,7 +34,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		}
 	}
 	
-
 	private bool _audible = true;
 	/// <summary>
 	/// Enable/disable music.
@@ -50,7 +49,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		}
 	}
 	
-	
 	/// <summary>
 	/// 0 mutes music, 1 uses masterVolume
 	/// </summary>
@@ -58,14 +56,12 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		get { return Audible ? 1 : 0; }
 	}
 	
-	
 	/// <summary>
 	/// Is music currently playing?
 	/// </summary>
 	public bool IsPlaying {
 		get { return (!currentTrack.isPlaying && !previousTrack.isPlaying) ? false : true; }
 	}
-	
 	
 	/// <summary>
 	/// The name of the currently playing AudioClip.
@@ -115,7 +111,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		Play (defaultTrack, 1, 0);
 	}
 	
-	
 	/// <summary>
 	/// Play a music clip by name.
 	/// </summary>
@@ -151,14 +146,9 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 	/// </param>
 	public void Play (string resource, float volume, float crossFade, bool loop)
 	{
-		// TODO logo an error if the referenced resource doesn't exist
-		
 		AudioClip clip = (AudioClip)Resources.Load ("Music/" + resource);
-//		if (clip == null)
-//			Debug.LogError("Music clip '" + resource + "' doesn't exist within a Resources/Music folder.");
 		Play (clip, volume, crossFade, loop);
 	}
-	
 	
 	/// <summary>
 	/// Play a given music AudioClip.
@@ -168,7 +158,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		Play (clip, 1, 0, true);
 	}
 	
-	
 	/// <summary>
 	/// Play a given music AudioClip at a specific volume.
 	/// </summary>
@@ -177,7 +166,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		Play (clip, volume, 0, true);
 	}
 	
-	
 	/// <summary>
 	/// Play a given music AudioClip at a specific volume with crossfade.
 	/// </summary>
@@ -185,7 +173,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 	{
 		Play (clip, volume, 0, true);
 	}
-	
 	
 	/// <summary>
 	/// Play a given AudioClip at a specific volume, and cross fade if another track is currently playing.
@@ -231,7 +218,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		}
 	}
 	
-	
 	/// <summary>
 	/// Stop all music.
 	/// </summary>
@@ -240,7 +226,7 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 	/// </param>
 	public void Stop (float fadeOut)
 	{
-//		StopCoroutine ("DoStop");
+		StopCoroutine ("DoStop");
 		StartCoroutine ("DoStop", new FadeProperties (currentTrack, fadeOut, 0));
 	}
 	
@@ -250,7 +236,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		yield return DoFade (settings);
 		settings.source.Stop ();
 	}
-	
 	
 	/// <summary>
 	/// Fade the volume of the currently playing track.
@@ -266,7 +251,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		Fade (currentTrack, length, targetVolume);
 	}
 	
-	
 	private void Fade (AudioSource source, float length, float targetVolume)
 	{
 		StopCoroutine ("DoFade");
@@ -276,7 +260,6 @@ public sealed class MusicManager : ManagerSingleton<MusicManager> {
 		}
 		StartCoroutine ("DoFade", new FadeProperties (source, length, targetVolume));		
 	}
-	
 	
 	private IEnumerator DoFade (FadeProperties settings)
 	{
